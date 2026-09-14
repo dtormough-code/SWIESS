@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brew & Co. — Coffee on 5th</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --base: #1e2a22;
+    --panel: #253328;
+    --paper: #f3eedf;
+    --paper-dim: #b9c2b3;
+    --honey: #e8a93d;
+    --line: rgba(243,238,223,0.14);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--base);
+    color: var(--paper);
+    font-family: 'Work Sans', sans-serif;
+    line-height: 1.6;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+  h1, h2, .display { font-family: 'DM Serif Display', serif; font-weight: 400; line-height: 1.15; margin: 0; }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--honey); outline-offset: 3px; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  header .wrap { display: flex; justify-content: space-between; align-items: center; }
+  .brand { font-family: 'DM Serif Display', serif; font-size: 1.3rem; }
+  nav a { margin-left: 24px; font-size: 0.92rem; color: var(--paper-dim); }
+  nav a:hover { color: var(--paper); }
+
+  .hero { padding: 90px 0 60px; }
+  .hero-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
+  @media (min-width: 680px) { .hero-grid { grid-template-columns: 1.1fr 0.9fr; } }
+  .hero h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); max-width: 12ch; }
+  .hero p { color: var(--paper-dim); max-width: 42ch; margin-top: 18px; font-size: 1.05rem; }
+  .cta {
+    display: inline-block;
+    margin-top: 26px;
+    background: var(--honey);
+    color: var(--base);
+    padding: 12px 24px;
+    border-radius: 3px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .cta:hover { background: #f2b953; }
+
+  .cup { width: 100%; max-width: 220px; margin: 0 auto; display: block; }
+
+  .divider {
+    height: 28px;
+    width: 100%;
+    background-repeat: repeat-x;
+    background-size: 40px 28px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='28' viewBox='0 0 40 28'><path d='M0 20 Q10 6 20 20 T40 20' stroke='%23e8a93d' stroke-width='2' fill='none'/></svg>");
+    opacity: 0.55;
+  }
+
+  section { padding: 60px 0; }
+  .eyebrow { color: var(--honey); font-size: 0.85rem; }
+  .section-head { margin-bottom: 34px; }
+  .section-head h2 { font-size: 1.9rem; margin-top: 8px; }
+
+  .menu-list { display: grid; gap: 22px; }
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .menu-item h3 { font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 1.15rem; margin: 0; }
+  .menu-item p { color: var(--paper-dim); margin: 4px 0 0; font-size: 0.92rem; }
+  .menu-price { font-size: 1.05rem; white-space: nowrap; padding-top: 2px; }
+
+  .story p { color: var(--paper-dim); max-width: 58ch; font-size: 1.02rem; }
+
+  .find { display: grid; gap: 26px; }
+  @media (min-width: 680px) { .find { grid-template-columns: 1fr 1fr; } }
+  .find-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 24px;
+  }
+  .find-card h3 { font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 1.1rem; margin-bottom: 10px; }
+  .find-card p { color: var(--paper-dim); margin: 0; font-size: 0.95rem; }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 30px 0;
+    color: var(--paper-dim);
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="brand">Brew & Co.</span>
+    <nav>
+      <a href="#menu">Menu</a>
+      <a href="#story">Story</a>
+      <a href="#find">Visit</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Good mornings start on 5th Street.</h1>
+      <p>Small-batch coffee, baked daily, poured by people who know your order by the second visit.</p>
+      <a class="cta" href="#find">Find us</a>
+    </div>
+    <svg class="cup" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Line drawing of a coffee cup with steam">
+      <path d="M40 70 H140 L132 150 Q130 165 115 165 H65 Q50 165 48 150 Z" stroke="#e8a93d" stroke-width="3"/>
+      <path d="M140 85 H160 Q175 85 175 105 Q175 122 158 122 H144" stroke="#e8a93d" stroke-width="3"/>
+      <path d="M70 55 Q65 40 75 30" stroke="#f3eedf" stroke-width="2" opacity="0.6"/>
+      <path d="M95 55 Q90 40 100 28" stroke="#f3eedf" stroke-width="2" opacity="0.6"/>
+      <path d="M120 55 Q115 40 125 30" stroke="#f3eedf" stroke-width="2" opacity="0.6"/>
+    </svg>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">This week's pours</div>
+      <h2>On the board</h2>
+    </div>
+    <div class="menu-list">
+      <div class="menu-item">
+        <div>
+          <h3>Honey Oat Latte</h3>
+          <p>Espresso, steamed oat milk, local honey</p>
+        </div>
+        <div class="menu-price">$5.50</div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <h3>Pour Over — Rotating Origin</h3>
+          <p>Ask what's brewing this week</p>
+        </div>
+        <div class="menu-price">$4.75</div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <h3>Brown Butter Croissant</h3>
+          <p>Baked fresh each morning, gone by 10</p>
+        </div>
+        <div class="menu-price">$4.25</div>
+      </div>
+      <div class="menu-item">
+        <div>
+          <h3>Cardamom Cold Brew</h3>
+          <p>Slow-steeped 18 hours, lightly spiced</p>
+        </div>
+        <div class="menu-price">$5.00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="story">
+  <div class="wrap story">
+    <div class="section-head">
+      <div class="eyebrow">The story</div>
+      <h2>Started with one machine and a folding table</h2>
+    </div>
+    <p>Brew & Co. opened as a pop-up cart before finding its home on 5th Street. The menu changes with what's in season and what the roaster's excited about that month — the constant is that everything's made in-house, in small batches, by the same three people who'll hand it to you.</p>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<section id="find">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Visit</div>
+      <h2>Find us</h2>
+    </div>
+    <div class="find">
+      <div class="find-card">
+        <h3>Address</h3>
+        <p>212 5th Street<br>Open daily, 7am – 3pm</p>
+      </div>
+      <div class="find-card">
+        <h3>Follow along</h3>
+        <p>New pours and pastry drops posted most mornings.<br>@brewandco on Instagram</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>Brew & Co. — 212 5th Street</span>
+    <span>Concept project by Your Name</span>
+  </div>
+</footer>
+
+</body>
+</html>
