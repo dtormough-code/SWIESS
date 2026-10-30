@@ -1,0 +1,46 @@
+body {
+  background-color: #16161d;
+  color: white;
+  display: flex;
+  padding: 16px;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.card {
+  background-color: #22222e;
+  padding: 32px;
+  border-radius: 16px;
+  text-align: center;
+  width: 100%;
+  max-width: 420px;
+  box-sizing: border-box;
+}
+button {
+  background-color: #505081;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin: 8px;
+}
+
+button:hover {
+  background-color: #c280ff;
+}
+.hidden{
+  display: none;
+}
+@media (max-width: 480px) {
+  .card {
+    padding: 24px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+}

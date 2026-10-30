@@ -1,0 +1,33 @@
+{
+    "transactions": [
+        {
+            "type": "income",
+            "amount": 100000.0,
+            "category": "data",
+            "date": "2026-09-18",
+            "time": "22:44:37"
+        },
+        {
+            "type": "income",
+            "amount": 1000.0,
+            "category": "FOOD",
+            "date": "2026-09-21",
+            "time": "00:30:13"
+        },
+        {
+            "type": "income",
+            "amount": 190.0,
+            "category": "Food",
+            "date": "2026-09-21",
+            "time": "00:30:49"
+        },
+        {
+            "type": "income",
+            "amount": 200.0,
+            "category": "food",
+            "date": "2026-09-21",
+            "time": "14:12:59"
+        }
+    ],
+    "budget_limit": 1000.0
+}

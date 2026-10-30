@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>About Me</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <h1>Ter-erdoo</h1>
+    <p>Aspiring Web Developer</p>
+  </header>
+
+  <main>
+
+    <section aria-labelledby="about-heading">
+      <h2 id="about-heading">About Me</h2>
+      <figure>
+        <img src="profile.jpg" alt="Photo of Ter-erdoo" width="200">
+        <figcaption>That's me!</figcaption>
+      </figure>
+      <p>
+        Hi, I'm Ter-erdoo. I'm currently learning web development through an
+        IT bootcamp, focused on building a strong foundation in HTML, CSS,
+        and Python. I enjoy solving problems step by step and turning ideas
+        into working projects.
+      </p>
+    </section>
+
+    <section aria-labelledby="skills-heading">
+      <h2 id="skills-heading">Skills</h2>
+      <ul>
+        <li>HTML5 &amp; semantic markup</li>
+        <li>CSS fundamentals</li>
+        <li>Python basics</li>
+        <li>Problem solving</li>
+        <li>Version control (Git)</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Contact Me</h2>
+      <form action="#" method="post">
+        <div>
+          <label for="name">Name</label><br>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+          <label for="email">Email</label><br>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+          <label for="message">Message</label><br>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <div>
+          <button type="submit">Send</button>
+        </div>
+      </form>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Ter-erdoo. Built while learning HTML.</p>
+  </footer>
+
+</body>
+</html>

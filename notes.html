@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes</title>
+    <link rel="stylesheet" href="notes.css" />
+  </head>
+  <body>
+    <div class="app">
+      <h1>Notes</h1>
+      <input type="text" id="titleInput" placeholder="Title" />
+      <textarea id="contentInput" placeholder="Write your note..."></textarea>
+      <button id="addBtn">Add Note</button>
+
+      <h2>Your Notes</h2>
+      <div id="notesList"></div>
+    </div>
+
+    <script>
+      async function loadNotes() {
+        const response = await fetch("http://127.0.0.1:5000/notes");
+        const notes = await response.json();
+
+        const notesList = document.getElementById("notesList");
+        notesList.innerHTML = "";
+
+        notes.forEach((note) => {
+          const div = document.createElement("div");
+          div.className = "note";
+
+          const title = document.createElement("h3");
+          title.textContent = note.title;
+
+          const content = document.createElement("p");
+          content.textContent = note.content;
+
+          const editBtn = document.createElement("button");
+          editBtn.textContent = "Edit";
+          editBtn.className = "edit-btn";
+          editBtn.addEventListener("click", () => editNote(note));
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.textContent = "Delete";
+          deleteBtn.className = "delete-btn";
+          deleteBtn.addEventListener("click", () => deleteNote(note.id));
+
+          const summaryBox = document.createElement("p");
+          summaryBox.className = "summary";
+          if (note.summary) {
+            summaryBox.textContent = note.summary;
+          }
+
+          const summarizeBtn = document.createElement("button");
+          summarizeBtn.className = "summarize-btn";
+          summarizeBtn.textContent = "Summarize";
+          // ADDED: connects the button to the summarize function
+          summarizeBtn.addEventListener("click", () =>
+            summarizeNote(note, summarizeBtn, summaryBox),
+          );
+
+          div.appendChild(title);
+          div.appendChild(content);
+          div.appendChild(editBtn);
+          div.appendChild(deleteBtn);
+          div.appendChild(summaryBox);
+          div.appendChild(summarizeBtn);
+          notesList.appendChild(div);
+        });
+      }
+
+      document.getElementById("addBtn").addEventListener("click", async () => {
+        const title = document.getElementById("titleInput").value;
+        const content = document.getElementById("contentInput").value;
+
+        await fetch("http://127.0.0.1:5000/notes", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title, content }),
+        });
+
+        loadNotes();
+      });
+
+      async function deleteNote(id) {
+        await fetch(`http://127.0.0.1:5000/notes/${id}`, { method: "DELETE" });
+        loadNotes();
+      }
+
+      // ADDED: calls your Flask summarize route and shows the result
+      async function summarizeNote(note, button, summaryBox) {
+        button.disabled = true;
+        button.textContent = "Summarizing...";
+
+        try {
+          const response = await fetch(
+            `http://127.0.0.1:5000/notes/${note.id}/summarize`,
+            { method: "POST" },
+          );
+          const data = await response.json();
+
+          if (response.ok) {
+            summaryBox.textContent = data.summary;
+          } else {
+            summaryBox.textContent = data.error;
+          }
+        } catch (error) {
+          summaryBox.textContent = "Could not reach the server. Try again.";
+        }
+
+        button.disabled = false;
+        button.textContent = "Summarize";
+      }
+
+      async function editNote(note) {
+        const newTitle = prompt("Edit Title:", note.title);
+        const newContent = prompt("Edit Content:", note.content);
+
+        if (newTitle !== null && newContent !== null) {
+          await fetch(`http://127.0.0.1:5000/notes/${note.id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ title: newTitle, content: newContent }),
+          });
+        }
+
+        loadNotes();
+        document.getElementById("titleInput").value = "";
+        document.getElementById("contentInput").value = "";
+      }
+
+      loadNotes();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,114 @@
+body {
+    font-family: sans-serif;
+    background-color: #fcfbf9;
+}
+
+.app {
+    max-width: 480px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #f2eee6;
+    border: 1px solid #8a8578;
+    border-radius: 16px;
+}
+
+h1 {
+    text-align: center;
+}
+
+#titleInput,
+#contentInput {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    background-color: #eeedfe;
+    border: 1px solid #7f77dd;
+    border-radius: 10px;
+    color: #534ab7;
+    font-size: 1em;
+    font-family: inherit;
+}
+
+#contentInput {
+    height: 100px;
+    resize: vertical;
+}
+
+#addBtn {
+    padding: 12px 40px;
+    background-color: #e1f5ee;
+    border: 1px solid #0f6e56;
+    border-radius: 10px;
+    color: #085041;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+h2 {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #bbb7ad;
+    font-size: 1em;
+    font-weight: normal;
+    color: #5f5e5a;
+}
+
+.note {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 0 8px;
+    align-items: start;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    border: 1px solid #8a8578;
+    border-radius: 10px;
+}
+
+.note h3 {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0 0 6px;
+}
+
+.note p {
+    grid-column: 1;
+    grid-row: 2;
+    margin: 0;
+    color: #5f5e5a;
+}
+
+.edit-btn,
+.delete-btn {
+    grid-row: 1;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.edit-btn {
+    grid-column: 2;
+    background-color: #faeeda;
+    border: 1px solid #854f0b;
+    color: #854f0b;
+}
+
+.delete-btn {
+    grid-column: 3;
+    background-color: #fcebeb;
+    border: 1px solid #a32d2d;
+    color: #a32d2d;
+}
+.note .summary {
+    grid-row: 3;
+    font-style: italic;
+}
+
+.summarize-btn {
+    grid-column: 1;
+    grid-row: 4;
+    justify-self: start;
+    margin-top: 8px;
+}
