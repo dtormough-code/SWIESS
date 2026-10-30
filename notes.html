@@ -19,7 +19,7 @@
 
     <script>
       async function loadNotes() {
-        const response = await fetch("http://127.0.0.1:5000/notes");
+        const response = await fetch("/notes");
         const notes = await response.json();
 
         const notesList = document.getElementById("notesList");
@@ -73,7 +73,7 @@
         const title = document.getElementById("titleInput").value;
         const content = document.getElementById("contentInput").value;
 
-        await fetch("http://127.0.0.1:5000/notes", {
+        await fetch("/notes", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ title, content }),
@@ -83,7 +83,7 @@
       });
 
       async function deleteNote(id) {
-        await fetch(`http://127.0.0.1:5000/notes/${id}`, { method: "DELETE" });
+        await fetch(`/notes/${id}`, { method: "DELETE" });
         loadNotes();
       }
 
@@ -94,7 +94,7 @@
 
         try {
           const response = await fetch(
-            `http://127.0.0.1:5000/notes/${note.id}/summarize`,
+            `/notes/${note.id}/summarize`,
             { method: "POST" },
           );
           const data = await response.json();
@@ -117,7 +117,7 @@
         const newContent = prompt("Edit Content:", note.content);
 
         if (newTitle !== null && newContent !== null) {
-          await fetch(`http://127.0.0.1:5000/notes/${note.id}`, {
+          await fetch(`/notes/${note.id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ title: newTitle, content: newContent }),

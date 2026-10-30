@@ -1,6 +1,8 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
-import sqlite3
+import os
+import psycopg
+from psycopg.rows import dict_row
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
@@ -11,9 +13,10 @@ app = Flask(__name__)
 CORS(app)
 
 def get_db_connection():
-    conn = sqlite3.connect('data.db')
-    conn.row_factory = sqlite3.Row
-    return conn
+    return psycopg.connect(
+        os.getenv("DATABASE_URL"),
+        row_factory=dict_row
+    )
 
 @app.route('/notes', methods=['GET'])
 def get_notes():
@@ -37,7 +40,7 @@ def create_note():
         return jsonify({"error": "Title is required"}), 400
 
     conn = get_db_connection()
-    conn.execute('INSERT INTO notes (title, content, category_id) VALUES (?, ?, ?)',
+    conn.execute('INSERT INTO notes (title, content, category_id) VALUES (%s, %s, %s)',
                  (title, content, category_id))
     conn.commit()
     conn.close()
@@ -54,7 +57,7 @@ def update_note(note_id):
         return jsonify({"error": "Title is required"}), 400
 
     conn = get_db_connection()
-    conn.execute('UPDATE notes SET title = ?, content = ? WHERE id = ?', (title, content, note_id))
+    conn.execute('UPDATE notes SET title = %s, content = %s WHERE id = %s', (title, content, note_id))
     conn.commit()
     conn.close()
 
@@ -63,7 +66,7 @@ def update_note(note_id):
 @app.route('/notes/<int:note_id>', methods=['DELETE'])
 def delete_note(note_id):
     conn = get_db_connection()
-    conn.execute('DELETE FROM notes WHERE id = ?', (note_id,))
+    conn.execute('DELETE FROM notes WHERE id = %s', (note_id,))
     conn.commit()
     conn.close()
     return jsonify({"message": "Note deleted"})
@@ -82,7 +85,11 @@ def hello():
 
 @app.route('/')
 def home():
-    return "Hello, Flask!"
+    return send_from_directory('.', 'notes.html')
+
+@app.route('/notes.css')
+def notes_css():
+    return send_from_directory('.', 'notes.css')
 
 @app.route('/about')
 def about():
@@ -108,7 +115,7 @@ def add_numbers():
 @app.route('/notes/<int:note_id>/summarize', methods=['POST'])
 def summarize_note(note_id):
     conn = get_db_connection()
-    note = conn.execute('SELECT * FROM notes WHERE id = ?', (note_id,)).fetchone()
+    note = conn.execute('SELECT * FROM notes WHERE id = %s', (note_id,)).fetchone()
 
     if note is None:
         conn.close()
@@ -138,7 +145,7 @@ def summarize_note(note_id):
         conn.close()
         return jsonify({"error": "Could not summarize right now. Try again later."}), 502
 
-    conn.execute('UPDATE notes SET summary = ? WHERE id = ?', (summary, note_id))
+    conn.execute('UPDATE notes SET summary = %s WHERE id = %s', (summary, note_id))
     conn.commit()
     conn.close()
     return jsonify({"summary": summary})
@@ -146,7 +153,7 @@ def summarize_note(note_id):
 @app.route('/notes/<int:note_id>/study-questions', methods=['POST'])
 def study_questions(note_id):
     conn = get_db_connection()
-    note = conn.execute('SELECT * FROM notes WHERE id = ?', (note_id,)).fetchone()
+    note = conn.execute('SELECT * FROM notes WHERE id = %s', (note_id,)).fetchone()
     conn.close()
 
     if note is None:
@@ -174,7 +181,7 @@ def study_questions(note_id):
         return jsonify({"error": "Could not make questions right now. Try again later."}), 502
 
     conn = get_db_connection()
-    conn.execute('UPDATE notes SET study_questions = ? WHERE id = ?', (questions, note_id))
+    conn.execute('UPDATE notes SET study_questions = %s WHERE id = %s', (questions, note_id))
     conn.commit()
     conn.close()
     return jsonify({"study_questions": questions})
