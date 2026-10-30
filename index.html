@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather</title>
+    <link rel="stylesheet" href="weather.css">
+</head>
+<body>
+    <h1>Weather Dashboard</h1>
+    <div id="searchBox">
+        <input type="text" id="cityInput" placeholder="Enter city name...">
+        <button id="searchBtn">Search</button>
+    </div>
+    <div id="weatherInfo">
+        <h2>Weather Information</h2>
+        <p id="status"></p>
+        <p id="temperature">Temperature: </p>
+        <p id="humidity">Humidity: </p>
+        <p id="description">Description: </p>
+    </div>
+    <div id="forecast">
+        <h2>5-Day Forecast</h2>
+        <ul id="forecastList"></ul>
+    </div>
+ <script>
+  async function getWeather(city) {
+    document.getElementById('status').innerText = 'Loading...';
+    const apiKey = '5581170e619bae47fa65e1b069e27600';
+
+    try {
+      const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Weather fetch failed');
+      }
+
+      document.getElementById('temperature').innerText = `Temperature: ${data.main.temp}°C`;
+      document.getElementById('humidity').innerText = `Humidity: ${data.main.humidity}%`;
+      document.getElementById('description').innerText = `Description: ${data.weather[0].description}`;
+      document.getElementById('status').innerText = '';
+      getForecast(city);
+    } catch (error) {
+      console.log(error);
+      document.getElementById('status').innerText = 'Failed to fetch weather. Please try again.';
+    }
+  }
+
+  // NEW FUNCTION GOES HERE
+  async function getForecast(city) {
+    const apiKey = '5581170e619bae47fa65e1b069e27600';
+    try {
+      const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Forecast fetch failed');
+      }
+
+      const dailyForecasts = data.list.filter(entry => entry.dt_txt.includes("12:00:00"));
+
+      const forecastList = document.getElementById('forecastList');
+      forecastList.innerHTML = '';
+
+      dailyForecasts.forEach(entry => {
+        const li = document.createElement('li');
+        const date = new Date(entry.dt_txt).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        li.innerHTML = `<strong>${date}</strong><br>${Math.round(entry.main.temp)}°C<br>${entry.weather[0].description}`;
+        forecastList.appendChild(li);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  document.getElementById('searchBtn').addEventListener('click', () => {
+    const city = document.getElementById('cityInput').value.trim();
+
+    if (city) {
+        getWeather(city);
+    } else {
+        document.getElementById('status').innerText = 'Please enter a city name.';
+    }
+});
+</script>
+
+  </body>
+</html>
